@@ -5,7 +5,7 @@
     - name: Import VPC Variables
       include_vars: vars/vpc_setup
 
-    - name: Create Vprofile VPC
+    - name: Create project VPC
       ec2_vpc_net:
         name: "{{vpc_name}}"
         cidr_block: "{{vpcCidr}}"
@@ -16,7 +16,7 @@
         state: "{{state}}"
       register: vpcout
 
-      -debug:
+    - debug:
         var: vpcout
 
     - name: create Public Subnet 1 in Zone1
