@@ -1,3 +1,5 @@
-bastion_ami: ami-032eaa2b65ba077c0
+bastion_ami: ami-032eaa2b65ba077c0 #Amazon Linux 2 AMI
 region: us-east-2
 MYIP: 42.118.214.134/32
+keyName: profile-key
+instanceType: t2.micro

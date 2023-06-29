@@ -152,7 +152,7 @@
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         tags:
-          Name: Vprofile-PrivRT3
+          Name: project-PrivRT3
         subnets:
             - "{{ privsub3_out.subnet.id }}"
         routes:

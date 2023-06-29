@@ -1,4 +1,4 @@
-- name: Setup Vprofile Bastion Host
+- name: Setup Project Bastion Host
   hosts: localhost
   connection: local
   gather_facts: no
@@ -9,9 +9,9 @@
     - name: Import VPC setup Variable
       include_vars: vars/output_vars
 
-    - name: Create project ec2 key
+    - name: Create Project ec2 key
       ec2_key:
-        name: project-key
+        name: "{{ keyName }}"
         region: "{{ region }}"
       register: key_out
 
@@ -37,22 +37,65 @@
 
     - name: Creating Bastion Host
       ec2:
-        key_name: project-key
+        key_name: "{{ keyName }}"
         region: "{{ region }}"
-        instance_type: t2.micro
+        instance_type: "{{ instanceType }}"
         image: "{{ bastion_ami }}"
         wait: yes
         wait_timeout: 300
         instance_tags:
           Name: "Bastion_host"
-          Project: AnsibleProject
+          Project: Project
           Owner: Cloud Team
         exact_count: 1
         count_tag:
           Name: "Bastion_host"
-          Project: AnsibleProject
+          Project: Project
           Owner: Cloud Team
         group_id: "{{ BastionSG_out.group_id }}"
         vpc_subnet_id: "{{ pubsub3id }}"
         assign_public_ip: yes
       register: bastionHost_out
+
+    - name: Creating EC2 in privsub1
+      ec2:
+        key_name: "{{ keyName }}"
+        region: "{{ region }}"
+        instance_type: "{{ instanceType }}"
+        image: "{{ bastion_ami }}"
+        wait: yes
+        wait_timeout: 300
+        instance_tags:
+          Name: "privsub1Instance"
+          Project: Project
+          Owner: Cloud Team
+        exact_count: 1
+        count_tag:
+          Name: "privsub1Instance"
+          Project: Project
+          Owner: Cloud Team
+        vpc_subnet_id: "{{ privsub1id }}"
+        assign_public_ip: yes
+      register: privsub1Instance_out
+
+    - name: Creating EC2 in privsub3
+      ec2:
+         key_name: "{{ keyName }}"
+         region: "{{ region }}"
+         instance_type: "{{ instanceType }}"
+         image: "{{ bastion_ami }}"
+         wait: yes
+         wait_timeout: 300
+         instance_tags:
+           Name: "privsub3Instance"
+           Project: Project
+           Owner: Cloud Team
+         exact_count: 1
+         count_tag:
+           Name: "privsub3Instance"
+           Project: Project
+           Owner: Cloud Team
+         vpc_subnet_id: "{{ privsub3id }}"
+         assign_public_ip: yes
+         group_id: "{{ BastionSG_out.group_id }}"
+      register: privsub3Instance_out
