@@ -1,4 +1,4 @@
-vpc_name: "vpc_name"
+vpc_name: "vpc_project"
 
 #VPC Range
 vpcCidr: '172.20.0.0./16'
