@@ -1,4 +1,4 @@
-bastion_ami: ami-069d73f3235b535bd
+bastion_ami: ami-0d1c47ab964ae2b87
 region: us-east-2
 MYIP: 42.118.214.134/32
 keyName: profile-key
